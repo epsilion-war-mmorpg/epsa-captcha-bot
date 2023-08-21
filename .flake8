@@ -1,0 +1,19 @@
+[flake8]
+max-line-length = 125
+max-local-variables = 7
+
+ignore =
+    # Missing parameter(s) in Docstring
+    DAR101,
+
+    # Missing "Returns" in Docstring
+    DAR201,
+
+    #  Found too long ``try`` body length
+    WPS229,
+
+    # F-strings is OK
+    WPS305,
+
+    # Found walrus operator
+    WPS332,
