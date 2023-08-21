@@ -13,10 +13,10 @@ from app.captcha.resolvers import try_resolve
     ('На пути ты встретил капчу.\n ⚽️ - Напишите название вида спорта с маленькой буквы.', True),
 ])
 async def test_try_resolve_happy_path(payload: str, expected: bool):
-    event_mock = Mock()
-    event_mock.message.message = payload
+    message_mock = Mock()
+    message_mock.text = payload
 
-    answer = await try_resolve(event_mock)
+    answer = await try_resolve(message_mock)
 
     assert answer.question == payload
     assert bool(answer.resolver_type) is expected

@@ -12,7 +12,7 @@ logger = logging.getLogger(__file__)
 
 bot = Bot(
     token=app_settings.bot_token,
-    parse_mode='Markdown',
+    parse_mode='MarkdownV2',
 )
 router = Dispatcher(bot)
 

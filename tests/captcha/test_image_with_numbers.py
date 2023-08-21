@@ -9,11 +9,11 @@ async def test_image_with_numbers_happy_path(mocker):
     event_mock = Mock()
     event_mock.message.media = 'media content mocked'
     anticaptcha_mocked = mocker.patch(
-        'epsilion_wars_mmorpg_automation.captcha.image_with_numbers.anti_captcha_provider.resolve_image_to_number',
+        'app.captcha.image_with_numbers.anti_captcha_provider.resolve_image_to_number',
         return_value='1234',
     )
     base64_getter_mocked = mocker.patch(
-        'epsilion_wars_mmorpg_automation.captcha.image_with_numbers.get_photo_base64',
+        'app.captcha.image_with_numbers.get_photo_base64',
         return_value='base64/sdsd/sd/sd',
     )
 

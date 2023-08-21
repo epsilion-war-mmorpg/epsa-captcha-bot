@@ -9,6 +9,7 @@ from pydantic_settings import BaseSettings
 class AppSettings(BaseSettings):
     """Application settings class."""
 
+    available_gamebot_ids: set[int] = {776510403, 842830178}
     bot_token: str
     debug: bool = Field(default=False)
     anti_captcha_com_apikey: str = Field(default='', description='see https://anti-captcha.com for more information')
