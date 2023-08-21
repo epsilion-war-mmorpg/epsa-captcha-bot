@@ -2,6 +2,7 @@ The Epsilion War [captcha solver](http://t.me/epsa_captcha_bot).
 ========
 [![tests](https://github.com/esemi/epsa-captcha-bot/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/esemi/epsa-captcha-bot/actions/workflows/tests.yml)
 [![linters](https://github.com/esemi/epsa-captcha-bot/actions/workflows/linters.yml/badge.svg?branch=master)](https://github.com/esemi/epsa-captcha-bot/actions/workflows/linters.yml)
+[![CodeQL](https://github.com/esemi/epsa-captcha-bot/actions/workflows/github-code-scanning/codeql/badge.svg?branch=master)](https://github.com/esemi/epsa-captcha-bot/actions/workflows/github-code-scanning/codeql)
 
 The bot is designed to fast solve in-game captchas in [the Epsilion War MMORPG](https://t.me/epsilionwarbot?start=ref-537453818)
 

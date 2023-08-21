@@ -35,7 +35,7 @@ async def try_resolve(message: types.Message) -> CaptchaAnswer:
         resolvers_enabled.append(image_with_numbers)
 
     for resolver in resolvers_enabled:
-        answer_str = await resolver(message.text, message)
+        answer_str = await resolver(message.text or message.caption or 'empty', message)
         if answer_str:
             return CaptchaAnswer(
                 resolver_type=resolver.__name__,

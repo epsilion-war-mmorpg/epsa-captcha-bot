@@ -109,7 +109,7 @@ async def resolve_image_to_number(image_source: str) -> str | None:
         throttling_time=app_settings.anti_captcha_com_create_task_throttling,
         image_base64=image_source,
     )
-    logging.info('AntiCaptchaClient create task response: %s', created_task_response)
+    logging.info('AntiCaptchaClient create task response: {0}'.format(created_task_response))
     if not created_task_response:
         return None
 
@@ -118,7 +118,7 @@ async def resolve_image_to_number(image_source: str) -> str | None:
         throttling_time=app_settings.anti_captcha_com_get_task_throttling,
         task_id=created_task_response.get('taskId'),
     )
-    logging.info('AntiCaptchaClient get task response: %s', task_solution_response)
+    logging.info('AntiCaptchaClient get task response: {0}'.format(task_solution_response))
     if not task_solution_response:
         return None
 

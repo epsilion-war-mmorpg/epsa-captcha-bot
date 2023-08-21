@@ -9,11 +9,24 @@ ignore =
     # Missing "Returns" in Docstring
     DAR201,
 
+    # Missing exception(s) in Raises section
+    DAR401,
+
     #  Found too long ``try`` body length
     WPS229,
 
     # F-strings is OK
     WPS305,
 
+    # Found class without a base class - dataclass used
+    WPS306,
+
     # Found walrus operator
     WPS332,
+
+
+per-file-ignores =
+    #  WPS420   Found wrong keyword: pass
+    #  WPS604   Found incorrect node inside `class` body - custom exceptions
+
+    app/captcha/anti_captcha_provider.py: WPS420, WPS604,
