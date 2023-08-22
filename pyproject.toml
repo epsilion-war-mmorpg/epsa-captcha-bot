@@ -12,6 +12,7 @@ aiogram = "^2.25.1"
 pydantic = {extras = ["dotenv"], version = "^2.2.1"}
 pydantic-settings = "^2.0.3"
 httpx = "^0.24.1"
+redis = {extras = ["hiredis"], version = "^5.0.0"}
 
 
 [tool.poetry.group.dev.dependencies]

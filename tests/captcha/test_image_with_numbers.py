@@ -1,3 +1,4 @@
+import uuid
 from unittest.mock import Mock
 
 from app.captcha.image_with_numbers import image_with_numbers
@@ -6,11 +7,11 @@ valid_captcha_message = '❓ На пути ты встретил капчу, о�
 
 
 async def test_image_with_numbers_happy_path(mocker):
+    photo_object_mock = Mock()
+    photo_object_mock.file_id = 'AgACAgIAAxkBAAMlZOPD3v3CD_88YzGxMJPZrrCLGKQAAinMMRsNaMlI2SZKGr-vdrIBAAMCAANzAAMwBA'
+    photo_object_mock.file_unique_id = uuid.uuid4().hex
     message_mock = Mock()
-    message_mock.photo = [
-        {"file_id": "AgACAgIAAxkBAAMlZOPD3v3CD_88YzGxMJPZrrCLGKQAAinMMRsNaMlI2SZKGr-vdrIBAAMCAANzAAMwBA", "file_unique_id": "AQADKcwxGw1oyUh4", "file_size": 937, "width": 90, "height": 34},
-        {"file_id": "AgACAgIAAxkBAAMlZOPD3v3CD_88YzGxMJPZrrCLGKQAAinMMRsNaMlI2SZKGr-vdrIBAAMCAANtAAMwBA", "file_unique_id": "AQADKcwxGw1oyUhy", "file_size": 3002, "width": 160, "height": 60},
-    ]
+    message_mock.photo = [photo_object_mock]
     anticaptcha_mocked = mocker.patch(
         'app.captcha.image_with_numbers.anti_captcha_provider.resolve_image_to_number',
         return_value='1234',
@@ -55,8 +56,11 @@ async def test_image_with_numbers_skip_by_message():
 
 
 async def test_image_with_numbers_media_not_loaded(mocker):
+    photo_object_mock = Mock()
+    photo_object_mock.file_id = 'AgACAgIAAxkBAAMlZOPD3v3CD_88YzGxMJPZrrCLGKQAAinMMRsNaMlI2SZKGr-vdrIBAAMCAANzAAMwBA'
+    photo_object_mock.file_unique_id = uuid.uuid4().hex
     message_mock = Mock()
-    message_mock.photo = ['sdsdsd']
+    message_mock.photo = [photo_object_mock]
     base64_getter_mocked = mocker.patch(
         'app.captcha.image_with_numbers.get_photo_base64',
         return_value='',

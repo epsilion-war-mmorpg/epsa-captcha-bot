@@ -2,7 +2,7 @@
 
 import os
 
-from pydantic import Field
+from pydantic import Field, RedisDsn
 from pydantic_settings import BaseSettings
 
 
@@ -11,6 +11,7 @@ class AppSettings(BaseSettings):
 
     available_gamebot_ids: set[int] = {776510403, 842830178}
     bot_token: str
+    redis_dsn: RedisDsn = Field('redis://localhost:6379/6')
     debug: bool = Field(default=False)
     anti_captcha_com_apikey: str = Field(default='', description='see https://anti-captcha.com for more information')
     anti_captcha_com_timeout: int = 15

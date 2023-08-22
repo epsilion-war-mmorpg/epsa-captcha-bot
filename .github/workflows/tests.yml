@@ -21,8 +21,14 @@ jobs:
         pip install poetry
         poetry --version
         poetry install
+    
+    - uses: shogo82148/actions-setup-redis@v1
+      with:
+        redis-version: 'latest'
+    - run: redis-cli ping
 
     - name: Run tests
       run: |
         echo 'bot_token=${{ secrets.TELEGRAM_TEST_TOKEN }}' > .env
+        echo 'anti_captcha_com_apikey=${{ secrets.ANTI_CAPTCHA_APIKEY }}' >> .env
         poetry run pytest -ra -v --cov=app

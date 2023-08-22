@@ -65,6 +65,7 @@ async def captcha(message: types.Message) -> None:
         )
         return
 
+    logger.info(captcha_solve_response)
     await message.reply(
         text=captcha_solve_response.answer,
         disable_web_page_preview=True,

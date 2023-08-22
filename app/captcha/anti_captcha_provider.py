@@ -9,6 +9,8 @@ from app.settings import app_settings
 
 TASK_READY_STATE = 'ready'
 
+logger = logging.getLogger(__file__)
+
 
 class AntiCaptchaError(RuntimeError):
     """Custom anti-captcha provider error."""
@@ -35,7 +37,7 @@ class AntiCaptchaClient:
         https://anti-captcha.com/ru/apidoc/task-types/ImageToTextTask
         """
         async with httpx.AsyncClient() as http_client:
-            logging.info('request createTask')
+            logger.debug('request createTask')
             try:
                 response = await http_client.post(
                     url=f'{self._api_host}/createTask',
@@ -59,7 +61,7 @@ class AntiCaptchaClient:
                 raise AntiCaptchaError('network error') from fetch_exc
 
         task_data = response.json()
-        logging.info(f'response createTask {task_data=}')
+        logger.debug(f'response createTask {task_data=}')
         error = task_data.get('errorCode')
         if error:
             raise AntiCaptchaError(error)
@@ -73,7 +75,7 @@ class AntiCaptchaClient:
         https://anti-captcha.com/ru/apidoc/methods/getTaskResult
         """
         async with httpx.AsyncClient() as http_client:
-            logging.info('request getTaskResult')
+            logger.debug('request getTaskResult')
             try:
                 response = await http_client.post(
                     url=f'{self._api_host}/getTaskResult',
@@ -88,7 +90,7 @@ class AntiCaptchaClient:
                 raise AntiCaptchaError('network error') from fetch_exc
 
         task_data = response.json()
-        logging.info(f'response getTaskResult {task_data=}')
+        logger.debug(f'response getTaskResult {task_data=}')
         error = task_data.get('errorCode')
         if error:
             raise AntiCaptchaError(error)
@@ -109,7 +111,7 @@ async def resolve_image_to_number(image_source: str) -> str | None:
         throttling_time=app_settings.anti_captcha_com_create_task_throttling,
         image_base64=image_source,
     )
-    logging.info('AntiCaptchaClient create task response: {0}'.format(created_task_response))
+    logger.info('AntiCaptchaClient create task response: {0}'.format(created_task_response))
     if not created_task_response:
         return None
 
@@ -118,7 +120,7 @@ async def resolve_image_to_number(image_source: str) -> str | None:
         throttling_time=app_settings.anti_captcha_com_get_task_throttling,
         task_id=created_task_response.get('taskId'),
     )
-    logging.info('AntiCaptchaClient get task response: {0}'.format(task_solution_response))
+    logger.info('AntiCaptchaClient get task response: {0}'.format(task_solution_response))
     if not task_solution_response:
         return None
 
@@ -133,7 +135,7 @@ async def _call_create_few_times(call_count_limit: int, throttling_time: int, **
         try:
             return await client.create_task(**kwargs)
         except AntiCaptchaError as exc:
-            logging.warning(f'AntiCaptchaClient error: {exc}')
+            logger.warning(f'AntiCaptchaClient error: {exc}')
             await asyncio.sleep(throttling_time)
 
     return None
@@ -147,7 +149,7 @@ async def _call_get_few_times(call_count_limit: int, throttling_time: int, **kwa
         try:
             task_data = await client.get_task(**kwargs)
         except AntiCaptchaError as exc:
-            logging.warning(f'AntiCaptchaClient error: {exc}')
+            logger.warning(f'AntiCaptchaClient error: {exc}')
             await asyncio.sleep(throttling_time)
             continue
 
